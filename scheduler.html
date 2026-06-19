@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Session · Derick Baker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sage:    #8FAF8A;
+      --sage-lt: #EDF2EC;
+      --sand:    #F5F0E8;
+      --stone:   #E8E0D4;
+      --warm:    #B8956A;
+      --warm-lt: #F7EFE6;
+      --ink:     #2E2A26;
+      --ink-mid: #5C5550;
+      --ink-lt:  #9A918A;
+      --white:   #FDFCFA;
+      --green:   #4a7045;
+      --red:     #b94a4a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--sand);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ——— TOP BAR ——— */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--stone);
+      padding: 0 2rem;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-link:hover { color: var(--sage); }
+
+    /* ——— MAIN LAYOUT ——— */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ——— SIDEBAR ——— */
+    .sidebar {
+      background: var(--white);
+      border-radius: 1.25rem;
+      border: 1px solid var(--stone);
+      padding: 1.75rem;
+    }
+
+    .sidebar h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .sidebar-role {
+      font-size: 0.82rem;
+      color: var(--ink-lt);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid var(--stone);
+      margin: 1.25rem 0;
+    }
+
+    .session-type {
+      padding: 1rem;
+      border: 1.5px solid var(--stone);
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 0.75rem;
+    }
+
+    .session-type:hover { border-color: var(--sage); }
+
+    .session-type.active {
+      border-color: var(--sage);
+      background: var(--sage-lt);
+    }
+
+    .session-type-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .session-type-meta {
+      font-size: 0.78rem;
+      color: var(--ink-lt);
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      margin-bottom: 0.65rem;
+    }
+
+    .info-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ——— BOOKING PANEL ——— */
+    .booking-panel {
+      background: var(--white);
+      border-radius: 1.25rem;
+      border: 1px solid var(--stone);
+      overflow: hidden;
+    }
+
+    /* ——— STEPS INDICATOR ——— */
+    .steps-bar {
+      display: flex;
+      border-bottom: 1px solid var(--stone);
+      padding: 1rem 1.75rem;
+      gap: 0;
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--ink-lt);
+      flex: 1;
+    }
+
+    .step-indicator.active { color: var(--sage); }
+    .step-indicator.done { color: var(--green); }
+
+    .step-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .step-indicator.active .step-dot {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: #fff;
+    }
+
+    .step-indicator.done .step-dot {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .step-connector {
+      flex: 1;
+      height: 1px;
+      background: var(--stone);
+      margin: 0 0.5rem;
+      align-self: center;
+    }
+
+    /* ——— PANEL CONTENT ——— */
+    .panel-inner { padding: 1.75rem; }
+
+    .panel-heading {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .panel-sub {
+      font-size: 0.88rem;
+      color: var(--ink-lt);
+      margin-bottom: 1.75rem;
+    }
+
+    /* ——— CALENDAR ——— */
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .cal-month {
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .cal-nav-btn {
+      background: none;
+      border: 1px solid var(--stone);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-mid);
+      font-size: 1rem;
+      transition: all 0.15s;
+    }
+
+    .cal-nav-btn:hover { border-color: var(--sage); color: var(--sage); }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-header {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--ink-lt);
+      padding: 0.4rem 0;
+    }
+
+    .cal-day {
+      text-align: center;
+      padding: 0.55rem 0;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      color: var(--ink);
+      transition: all 0.12s;
+      border: 1.5px solid transparent;
+    }
+
+    .cal-day:hover:not(.empty):not(.past):not(.unavailable) {
+      background: var(--sage-lt);
+      border-color: var(--sage);
+    }
+
+    .cal-day.today { font-weight: 600; color: var(--warm); }
+
+    .cal-day.selected {
+      background: var(--sage);
+      color: #fff;
+      border-color: var(--sage);
+    }
+
+    .cal-day.empty, .cal-day.past { color: var(--stone); cursor: default; }
+
+    .cal-day.unavailable {
+      color: var(--ink-lt);
+      cursor: default;
+      text-decoration: line-through;
+    }
+
+    /* ——— TIME SLOTS ——— */
+    .time-section { margin-top: 1.5rem; }
+
+    .time-section-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-lt);
+      margin-bottom: 0.75rem;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .slot {
+      padding: 0.55rem;
+      text-align: center;
+      border: 1.5px solid var(--stone);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--ink-mid);
+      transition: all 0.12s;
+    }
+
+    .slot:hover:not(.booked) { border-color: var(--sage); color: var(--sage); background: var(--sage-lt); }
+
+    .slot.selected { background: var(--sage); border-color: var(--sage); color: #fff; }
+
+    .slot.booked {
+      background: var(--stone);
+      color: var(--ink-lt);
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* ——— FORM ——— */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      margin-bottom: 0.35rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.6rem 0.875rem;
+      border: 1.5px solid var(--stone);
+      border-radius: 0.55rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--white);
+      transition: border-color 0.15s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--sage);
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    .checkbox-row {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: auto;
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--sage);
+    }
+
+    .checkbox-label {
+      font-size: 0.82rem;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
+
+    /* ——— BUTTONS ——— */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.75rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.6rem;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--sage); color: #fff; }
+    .btn-primary:hover { background: #7a9875; }
+    .btn-primary:disabled { background: var(--stone); color: var(--ink-lt); cursor: not-allowed; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-mid);
+      border: 1.5px solid var(--stone);
+    }
+
+    .btn-ghost:hover { border-color: var(--sage); color: var(--sage); }
+
+    /* ——— CONFIRMATION ——— */
+    .confirm-card {
+      background: var(--sage-lt);
+      border: 1px solid var(--sage);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .confirm-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .confirm-label {
+      color: var(--ink-lt);
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .confirm-val { color: var(--ink); font-weight: 500; }
+
+    /* ——— ADMIN VIEW ——— */
+    .admin-toggle {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0.75;
+    }
+
+    .admin-toggle:hover { opacity: 1; }
+
+    .admin-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(46,42,38,0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-panel.open { display: flex; }
+
+    .admin-inner {
+      background: var(--white);
+      border-radius: 1.25rem;
+      width: min(720px, 95vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .admin-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-head h2 {
+      font-family: 'Lora', serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--ink-mid);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      background: var(--sand);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--stone); color: var(--ink-mid); }
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    .badge-green { background: #d4edda; color: #2d6a4f; }
+    .badge-warm { background: var(--warm-lt); color: #7a5030; }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--ink-lt);
+    }
+
+    .empty-state p { font-size: 0.9rem; margin-top: 0.5rem; }
+
+    /* ——— AVAILABILITY SETTINGS ——— */
+    .avail-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .day-toggle {
+      text-align: center;
+      padding: 0.6rem 0.25rem;
+      border: 1.5px solid var(--stone);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--ink-mid);
+      transition: all 0.12s;
+      user-select: none;
+    }
+
+    .day-toggle.on {
+      border-color: var(--sage);
+      background: var(--sage-lt);
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .time-range {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      margin: 0.75rem 0;
+    }
+
+    .time-range input[type="time"] {
+      width: auto;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.88rem;
+    }
+
+    /* ——— SUCCESS ——— */
+    .success-screen {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--sage-lt);
+      border: 2px solid var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.75rem;
+    }
+
+    .success-screen h2 {
+      font-family: 'Lora', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .success-screen p { font-size: 0.95rem; color: var(--ink-mid); max-width: 400px; margin: 0 auto 0.5rem; }
+
+    @media (max-width: 800px) {
+      .main { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .slots-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">Derick Baker</a>
+  <a href="index.html" class="back-link">← Back to website</a>
+</header>
+
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Book a session</h2>
+    <p class="sidebar-role">Student Counsellor · Supervised Practicum</p>
+
+    <p style="font-size:0.82rem; font-weight:500; color:var(--ink-mid); margin-bottom:0.75rem">Session type</p>
+
+    <div class="session-type active" onclick="selectType(this,'intro')">
+      <p class="session-type-name">Intro / discovery call</p>
+      <p class="session-type-meta">45–60 min · Online (video or phone)</p>
+    </div>
+    <div class="session-type" onclick="selectType(this,'individual')">
+      <p class="session-type-name">Individual counselling</p>
+      <p class="session-type-meta">60 min · Online</p>
+    </div>
+    <div class="session-type" onclick="selectType(this,'dnd')">
+      <p class="session-type-name">Therapeutic D&amp;D group</p>
+      <p class="session-type-meta">Express interest · Online</p>
+    </div>
+
+    <hr class="sidebar-divider" />
+
+    <div class="info-row">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Sessions offered free as part of supervised practicum</span>
+    </div>
+    <div class="info-row">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span>Online only · Video or phone call</span>
+    </div>
+    <div class="info-row">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span>derick.baker101@gmail.com</span>
+    </div>
+    <div class="info-row">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>All sessions are confidential</span>
+    </div>
+
+    <hr class="sidebar-divider" />
+
+    <p style="font-size:0.8rem; color:var(--ink-lt); line-height:1.55">
+      <em>If you are in crisis, please call Crisis Centre BC at 1-800-784-2433 (24/7).</em>
+    </p>
+  </aside>
+
+  <!-- BOOKING PANEL -->
+  <div class="booking-panel">
+
+    <!-- STEPS BAR -->
+    <div class="steps-bar" id="steps-bar">
+      <div class="step-indicator active" id="step1-ind">
+        <div class="step-dot">1</div>
+        <span>Pick a date &amp; time</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-indicator" id="step2-ind">
+        <div class="step-dot">2</div>
+        <span>Your details</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-indicator" id="step3-ind">
+        <div class="step-dot">3</div>
+        <span>Confirm</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: CALENDAR -->
+    <div class="panel-inner" id="step1">
+      <h3 class="panel-heading">Choose a date</h3>
+      <p class="panel-sub" id="step1-sub">Available dates are shown below based on your counsellor's current schedule.</p>
+
+      <div class="calendar-nav">
+        <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
+        <span class="cal-month" id="cal-month-label"></span>
+        <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
+      </div>
+
+      <div class="cal-grid">
+        <div class="cal-day-header">Sun</div>
+        <div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div>
+        <div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div>
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+        <div id="cal-days"></div>
+      </div>
+
+      <div class="time-section" id="time-section" style="display:none">
+        <p class="time-section-label" id="time-section-label">Available times</p>
+        <div class="slots-grid" id="morning-slots"></div>
+        <div id="afternoon-label" style="display:none" class="time-section-label">Afternoon</div>
+        <div class="slots-grid" id="afternoon-slots"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="step1-next" onclick="goStep(2)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: DETAILS -->
+    <div class="panel-inner" id="step2" style="display:none">
+      <h3 class="panel-heading">Your details</h3>
+      <p class="panel-sub">This information helps me prepare and is kept confidential.</p>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fname">First name *</label>
+          <input type="text" id="fname" placeholder="Your first name" />
+        </div>
+        <div class="form-group">
+          <label for="lname">Last name *</label>
+          <input type="text" id="lname" placeholder="Your last name" />
+        </div>
+        <div class="form-group">
+          <label for="cemail">Email address *</label>
+          <input type="email" id="cemail" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="cphone">Phone number (optional)</label>
+          <input type="tel" id="cphone" placeholder="250-555-0100" />
+        </div>
+        <div class="form-group full">
+          <label for="cformat">Preferred format *</label>
+          <select id="cformat">
+            <option value="">Select one…</option>
+            <option>Online — video call</option>
+            <option>Online — phone call</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label for="cnotes">Anything you'd like me to know before we meet? (optional)</label>
+          <textarea id="cnotes" placeholder="There's no wrong thing to say. Share whatever feels helpful. If you're interested in the D&D group, feel free to share what draws you to it."></textarea>
+        </div>
+        <div class="form-group full">
+          <div class="checkbox-row">
+            <input type="checkbox" id="consent" />
+            <label class="checkbox-label" for="consent">
+              I understand this is a student practicum and sessions are supervised. I consent to booking a session or expressing interest in a group program with this understanding.
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Review booking →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONFIRM -->
+    <div class="panel-inner" id="step3" style="display:none">
+      <h3 class="panel-heading">Confirm your booking</h3>
+      <p class="panel-sub">Please review your details before confirming.</p>
+
+      <div class="confirm-card">
+        <div class="confirm-row">
+          <span class="confirm-label">Session type</span>
+          <span class="confirm-val" id="c-type">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Date</span>
+          <span class="confirm-val" id="c-date">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Time</span>
+          <span class="confirm-val" id="c-time">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Format</span>
+          <span class="confirm-val" id="c-format">—</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Name</span>
+          <span class="confirm-val" id="c-name">—</span>
+        </div>
+        <div class="confirm-row" style="margin-bottom:0">
+          <span class="confirm-label">Email</span>
+          <span class="confirm-val" id="c-email">—</span>
+        </div>
+      </div>
+
+      <p style="font-size:0.85rem; color:var(--ink-mid); line-height:1.6; margin-bottom:0.5rem">
+        You'll receive a confirmation email shortly after booking. If you need to cancel or reschedule, please email at least 24 hours before your appointment.
+      </p>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="confirmBooking()">Confirm booking ✓</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success" style="display:none">
+      <div class="success-icon">🌿</div>
+      <h2>You're booked!</h2>
+      <p>A confirmation has been noted. I look forward to meeting you.</p>
+      <p id="success-details" style="font-weight:500; margin-top:0.5rem;"></p>
+      <div style="margin-top:2rem">
+        <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Back to website</a>
+        <button class="btn btn-primary" style="margin-left:0.75rem" onclick="bookAnother()">Book another</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADMIN TOGGLE -->
+<button class="admin-toggle" onclick="openAdmin()">🗓 My schedule</button>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="admin-panel">
+  <div class="admin-inner">
+    <div class="admin-head">
+      <h2>My schedule</h2>
+      <button class="close-btn" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <!-- Availability settings -->
+    <p style="font-size:0.85rem; font-weight:500; color:var(--ink-mid); margin-bottom:0.5rem">Available days</p>
+    <div class="avail-grid" id="avail-days">
+      <div class="day-toggle" data-day="0" onclick="toggleDay(this)">Sun</div>
+      <div class="day-toggle on" data-day="1" onclick="toggleDay(this)">Mon</div>
+      <div class="day-toggle on" data-day="2" onclick="toggleDay(this)">Tue</div>
+      <div class="day-toggle on" data-day="3" onclick="toggleDay(this)">Wed</div>
+      <div class="day-toggle on" data-day="4" onclick="toggleDay(this)">Thu</div>
+      <div class="day-toggle" data-day="5" onclick="toggleDay(this)">Fri</div>
+      <div class="day-toggle" data-day="6" onclick="toggleDay(this)">Sat</div>
+    </div>
+
+    <div class="time-range">
+      <label style="margin:0; min-width:60px; font-size:0.85rem; color:var(--ink-mid);">Hours:</label>
+      <input type="time" id="avail-start" value="09:00" />
+      <span>to</span>
+      <input type="time" id="avail-end" value="17:00" />
+      <button class="btn btn-primary" style="padding:0.4rem 1rem; font-size:0.82rem" onclick="saveAvail()">Save</button>
+    </div>
+
+    <hr style="border:none; border-top:1px solid var(--stone); margin:1.25rem 0" />
+
+    <!-- Upcoming bookings -->
+    <p style="font-size:0.85rem; font-weight:500; color:var(--ink-mid); margin-bottom:1rem">Upcoming bookings</p>
+    <div id="bookings-table-wrap">
+      <div class="empty-state">
+        <span style="font-size:2rem">📭</span>
+        <p>No bookings yet. They'll appear here once clients schedule.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* ——— STATE ——— */
+  const state = {
+    sessionType: 'intro',
+    sessionLabel: 'Intro / discovery call (45–60 min)',
+    selectedDate: null,
+    selectedSlot: null,
+    currentYear: new Date().getFullYear(),
+    currentMonth: new Date().getMonth(),
+    bookings: JSON.parse(localStorage.getItem('counsellor_bookings') || '[]'),
+    availDays: JSON.parse(localStorage.getItem('counsellor_avail_days') || '[1,2,3,4]'),
+    availStart: localStorage.getItem('counsellor_avail_start') || '09:00',
+    availEnd: localStorage.getItem('counsellor_avail_end') || '17:00',
+  };
+
+  /* ——— INIT ——— */
+  renderCalendar();
+  syncAvailUI();
+
+  function syncAvailUI() {
+    document.querySelectorAll('.day-toggle').forEach(el => {
+      const d = parseInt(el.dataset.day);
+      el.classList.toggle('on', state.availDays.includes(d));
+    });
+    document.getElementById('avail-start').value = state.availStart;
+    document.getElementById('avail-end').value = state.availEnd;
+  }
+
+  /* ——— SESSION TYPE ——— */
+  function selectType(el, type) {
+    document.querySelectorAll('.session-type').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    state.sessionType = type;
+    state.sessionLabel = el.querySelector('.session-type-name').textContent +
+      ' (' + el.querySelector('.session-type-meta').textContent.split('·')[0].trim() + ')';
+    if (type === 'dnd') {
+      document.getElementById('step1-sub').textContent =
+        'Select a preferred date and time to express your interest in the Therapeutic D&D group. Derick will follow up to confirm group schedule details.';
+    } else if (type === 'intro') {
+      document.getElementById('step1-sub').textContent =
+        'Showing availability for a 45–60 minute intro/discovery call.';
+    } else {
+      document.getElementById('step1-sub').textContent =
+        'Showing availability for a 60-minute individual counselling session.';
+    }
+    state.selectedSlot = null;
+    state.selectedDate = null;
+    document.getElementById('step1-next').disabled = true;
+    document.getElementById('time-section').style.display = 'none';
+    renderCalendar();
+  }
+
+  /* ——— CALENDAR ——— */
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+
+  function renderCalendar() {
+    const { currentYear: y, currentMonth: m } = state;
+    document.getElementById('cal-month-label').textContent = `${MONTHS[m]} ${y}`;
+
+    const firstDay = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const today = new Date();
+
+    let html = '';
+    for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(y, m, d);
+      const dayOfWeek = date.getDay();
+      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+
+      let classes = 'cal-day';
+      if (date < new Date(today.getFullYear(), today.getMonth(), today.getDate()))
+        classes += ' past';
+      else if (!state.availDays.includes(dayOfWeek))
+        classes += ' unavailable';
+      else
+        classes += ' available';
+
+      if (today.getDate() === d && today.getMonth() === m && today.getFullYear() === y)
+        classes += ' today';
+      if (state.selectedDate === dateStr) classes += ' selected';
+
+      html += `<div class="${classes}" onclick="selectDate('${dateStr}', this)">${d}</div>`;
+    }
+
+    document.getElementById('cal-days').innerHTML = html;
+  }
+
+  function selectDate(dateStr, el) {
+    if (el.classList.contains('past') || el.classList.contains('empty') || el.classList.contains('unavailable')) return;
+    state.selectedDate = dateStr;
+    state.selectedSlot = null;
+    document.getElementById('step1-next').disabled = true;
+
+    document.querySelectorAll('.cal-day').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+
+    renderTimeSlots(dateStr);
+  }
+
+  function renderTimeSlots(dateStr) {
+    const [y, mo, d] = dateStr.split('-').map(Number);
+    const [sh, sm] = state.availStart.split(':').map(Number);
+    const [eh, em] = state.availEnd.split(':').map(Number);
+
+    const dur = state.sessionType === 'intro' ? 60 : 60;
+    const slots = [];
+    let cur = sh * 60 + sm;
+    const end = eh * 60 + em;
+    while (cur + dur <= end) {
+      const hh = Math.floor(cur / 60);
+      const mm = cur % 60;
+      const label = `${hh > 12 ? hh - 12 : hh === 0 ? 12 : hh}:${String(mm).padStart(2,'0')} ${hh >= 12 ? 'PM' : 'AM'}`;
+      slots.push({ label, value: `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}` });
+      cur += dur;
+    }
+
+    // Check booked slots
+    const bookedSlots = state.bookings
+      .filter(b => b.date === dateStr)
+      .map(b => b.slot);
+
+    const morningSlots = slots.filter(s => parseInt(s.value.split(':')[0]) < 12);
+    const afternoonSlots = slots.filter(s => parseInt(s.value.split(':')[0]) >= 12);
+
+    const renderSlots = (arr, containerId) => {
+      const container = document.getElementById(containerId);
+      if (!arr.length) { container.innerHTML = ''; return; }
+      container.innerHTML = arr.map(s => {
+        const booked = bookedSlots.includes(s.value);
+        return `<div class="slot${booked ? ' booked' : ''}${state.selectedSlot === s.value ? ' selected' : ''}"
+          onclick="${booked ? '' : `pickSlot('${s.value}', '${s.label}', this)`}">${s.label}</div>`;
+      }).join('');
+    };
+
+    renderSlots(morningSlots, 'morning-slots');
+
+    const afLabel = document.getElementById('afternoon-label');
+    if (afternoonSlots.length) {
+      afLabel.style.display = 'block';
+      afLabel.textContent = 'Afternoon';
+    } else {
+      afLabel.style.display = 'none';
+    }
+    renderSlots(afternoonSlots, 'afternoon-slots');
+
+    const label = document.getElementById('time-section-label');
+    label.textContent = morningSlots.length ? 'Morning' : 'Available times';
+
+    const [fy, fm, fd] = dateStr.split('-').map(Number);
+    const dateObj = new Date(fy, fm - 1, fd);
+    const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dateObj.getDay()];
+    const monthName = MONTHS[fm - 1];
+    document.getElementById('time-section').style.display = 'block';
+    document.getElementById('time-section').querySelector('.time-section-label').textContent =
+      morningSlots.length && afternoonSlots.length ? 'Morning' : 'Available times';
+
+    if (slots.length === 0) {
+      document.getElementById('morning-slots').innerHTML = '<p style="color:var(--ink-lt); font-size:0.85rem; grid-column:1/-1">No slots available for this day.</p>';
+    }
+  }
+
+  function pickSlot(value, label, el) {
+    state.selectedSlot = value;
+    state.selectedSlotLabel = label;
+    document.querySelectorAll('.slot').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('step1-next').disabled = false;
+  }
+
+  function prevMonth() {
+    state.currentMonth--;
+    if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
+    renderCalendar();
+  }
+
+  function nextMonth() {
+    state.currentMonth++;
+    if (state.currentMonth > 11) { state.currentMonth = 0; state.currentYear++; }
+    renderCalendar();
+  }
+
+  /* ——— STEPS ——— */
+  function goStep(n) {
+    if (n === 2) {
+      if (!state.selectedDate || !state.selectedSlot) return;
+    }
+    if (n === 3) {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const email = document.getElementById('cemail').value.trim();
+      const format = document.getElementById('cformat').value;
+      const consent = document.getElementById('consent').checked;
+      if (!fname || !lname || !email || !format || !consent) {
+        alert('Please fill in all required fields and confirm your consent.');
+        return;
+      }
+      // Fill confirm card
+      const [fy, fm, fd] = state.selectedDate.split('-').map(Number);
+      const dateObj = new Date(fy, fm - 1, fd);
+      const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dateObj.getDay()];
+      document.getElementById('c-type').textContent = state.sessionLabel;
+      document.getElementById('c-date').textContent = `${dayName}, ${MONTHS[fm-1]} ${fd}, ${fy}`;
+      document.getElementById('c-time').textContent = state.selectedSlotLabel;
+      document.getElementById('c-format').textContent = format;
+      document.getElementById('c-name').textContent = `${fname} ${lname}`;
+      document.getElementById('c-email').textContent = email;
+    }
+
+    ['step1','step2','step3','success'].forEach(id => document.getElementById(id).style.display = 'none');
+    document.getElementById(`step${n}`).style.display = 'block';
+
+    document.querySelectorAll('[id^="step"][id$="-ind"]').forEach((el, i) => {
+      el.classList.remove('active','done');
+      if (i + 1 === n) el.classList.add('active');
+      else if (i + 1 < n) el.classList.add('done');
+    });
+  }
+
+  function confirmBooking() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('cemail').value.trim();
+    const phone = document.getElementById('cphone').value.trim();
+    const format = document.getElementById('cformat').value;
+    const notes = document.getElementById('cnotes').value.trim();
+
+    const booking = {
+      id: Date.now(),
+      type: state.sessionLabel,
+      date: state.selectedDate,
+      slot: state.selectedSlot,
+      slotLabel: state.selectedSlotLabel,
+      name: `${fname} ${lname}`,
+      email,
+      phone,
+      format,
+      notes,
+      bookedAt: new Date().toISOString(),
+    };
+
+    state.bookings.push(booking);
+    localStorage.setItem('counsellor_bookings', JSON.stringify(state.bookings));
+
+    // Show success
+    ['step1','step2','step3'].forEach(id => document.getElementById(id).style.display = 'none');
+    document.getElementById('success').style.display = 'block';
+
+    const [fy, fm, fd] = state.selectedDate.split('-').map(Number);
+    document.getElementById('success-details').textContent =
+      `${MONTHS[fm-1]} ${fd}, ${fy} at ${state.selectedSlotLabel}`;
+  }
+
+  function bookAnother() {
+    state.selectedDate = null;
+    state.selectedSlot = null;
+    document.getElementById('time-section').style.display = 'none';
+    document.getElementById('step1-next').disabled = true;
+    renderCalendar();
+    goStep(1);
+  }
+
+  /* ——— ADMIN ——— */
+  function openAdmin() {
+    renderBookingsTable();
+    document.getElementById('admin-panel').classList.add('open');
+  }
+
+  function closeAdmin() {
+    document.getElementById('admin-panel').classList.remove('open');
+  }
+
+  function renderBookingsTable() {
+    const wrap = document.getElementById('bookings-table-wrap');
+    const upcoming = state.bookings.filter(b => b.date >= new Date().toISOString().split('T')[0])
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    if (!upcoming.length) {
+      wrap.innerHTML = '<div class="empty-state"><span style="font-size:2rem">📭</span><p>No upcoming bookings yet.</p></div>';
+      return;
+    }
+
+    wrap.innerHTML = `<table>
+      <thead><tr>
+        <th>Date &amp; time</th><th>Client</th><th>Type</th><th>Format</th><th>Notes</th>
+      </tr></thead>
+      <tbody>
+        ${upcoming.map(b => {
+          const [fy, fm, fd] = b.date.split('-').map(Number);
+          return `<tr>
+            <td><strong>${MONTHS[fm-1]} ${fd}</strong><br><span style="color:var(--ink-lt); font-size:0.82rem">${b.slotLabel}</span></td>
+            <td>${b.name}<br><a href="mailto:${b.email}" style="font-size:0.8rem; color:var(--sage)">${b.email}</a></td>
+            <td><span class="badge badge-green">${b.type.split('(')[0].trim()}</span></td>
+            <td><span class="badge badge-warm">${b.format}</span></td>
+            <td style="font-size:0.82rem; color:var(--ink-lt); max-width:140px">${b.notes || '—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+  }
+
+  function toggleDay(el) {
+    const d = parseInt(el.dataset.day);
+    const idx = state.availDays.indexOf(d);
+    if (idx === -1) state.availDays.push(d);
+    else state.availDays.splice(idx, 1);
+    el.classList.toggle('on');
+  }
+
+  function saveAvail() {
+    state.availStart = document.getElementById('avail-start').value;
+    state.availEnd = document.getElementById('avail-end').value;
+    localStorage.setItem('counsellor_avail_days', JSON.stringify(state.availDays));
+    localStorage.setItem('counsellor_avail_start', state.availStart);
+    localStorage.setItem('counsellor_avail_end', state.availEnd);
+    renderCalendar();
+    closeAdmin();
+  }
+
+  /* Close admin on backdrop click */
+  document.getElementById('admin-panel').addEventListener('click', function(e) {
+    if (e.target === this) closeAdmin();
+  });
+</script>
+
+</body>
+</html>

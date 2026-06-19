@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Derick Baker — Student Counsellor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sage:    #8FAF8A;
+      --sage-lt: #EDF2EC;
+      --sand:    #F5F0E8;
+      --stone:   #E8E0D4;
+      --warm:    #B8956A;
+      --warm-lt: #F7EFE6;
+      --ink:     #2E2A26;
+      --ink-mid: #5C5550;
+      --ink-lt:  #9A918A;
+      --white:   #FDFCFA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    /* ——— NAV ——— */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253,252,250,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--stone);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-name {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--sage); }
+
+    .nav-cta {
+      background: var(--sage);
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 100px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #7a9875 !important; }
+
+    /* ——— HERO ——— */
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 6rem 5rem 5rem;
+      background: var(--sand);
+    }
+
+    .hero-text { max-width: 520px; }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-heading {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-heading em {
+      font-style: italic;
+      color: var(--warm);
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      margin-bottom: 2.5rem;
+      max-width: 420px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #7a9875; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink-mid);
+      border: 1.5px solid var(--stone);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover { border-color: var(--sage); color: var(--sage); }
+
+    /* Decorative artwork in hero */
+    .hero-art {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-art svg { width: 100%; max-width: 420px; }
+
+    /* ——— SECTION SHARED ——— */
+    section {
+      padding: 6rem 5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .section-body {
+      font-size: 1rem;
+      color: var(--ink-mid);
+      max-width: 620px;
+      margin-bottom: 2rem;
+    }
+
+    /* ——— ABOUT ——— */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      background: var(--white);
+    }
+
+    .about-quote {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.65;
+      border-left: 3px solid var(--sage);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .approach-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      background: var(--sage-lt);
+      color: #4a7045;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+    }
+
+    .about-image-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 2rem 2rem 2rem 0.5rem;
+      background: var(--stone);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--ink-lt);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 2rem;
+      border: 2px dashed var(--stone);
+    }
+
+    /* ——— APPROACH CARDS ——— */
+    #approach {
+      background: var(--sand);
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .approach-card {
+      background: var(--white);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      border: 1px solid var(--stone);
+    }
+
+    .approach-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--sage-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .approach-icon svg { width: 22px; height: 22px; stroke: #4a7045; fill: none; }
+
+    .approach-card h3 {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .approach-card p {
+      font-size: 0.92rem;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ——— BOOKING ——— */
+    #book {
+      background: var(--white);
+      text-align: center;
+    }
+
+    #book .section-heading, #book .section-body {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .booking-card {
+      background: var(--warm-lt);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      max-width: 680px;
+      margin: 3rem auto 0;
+      border: 1px solid var(--stone);
+    }
+
+    .booking-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      text-align: left;
+    }
+
+    .step-num {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--warm);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--ink-mid);
+    }
+
+    .booking-note {
+      font-size: 0.82rem;
+      color: var(--ink-lt);
+      margin-top: 1rem;
+    }
+
+    /* ——— RESOURCES ——— */
+    #resources {
+      background: var(--sage-lt);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .resource-card {
+      background: var(--white);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid var(--stone);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+    .resource-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--sage);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      background: var(--sage-lt);
+      white-space: nowrap;
+    }
+
+    .resource-card h3 {
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .resource-card p {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+    }
+
+    /* ——— CONTACT ——— */
+    #contact {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      border: 1px solid var(--stone);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      margin-bottom: 0.4rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border: 1.5px solid var(--stone);
+      border-radius: 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--white);
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--sage);
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--sage);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: #7a9875; }
+
+    .contact-info h3 {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--ink-mid);
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--sage-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-icon svg { width: 17px; height: 17px; stroke: #4a7045; fill: none; }
+
+    /* ——— D&D GROUP ——— */
+    #dnd {
+      background: var(--white);
+    }
+
+    .dnd-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .dnd-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .dnd-detail-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .dnd-detail-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--warm-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dnd-detail-icon svg { width: 18px; height: 18px; stroke: var(--warm); fill: none; }
+
+    .dnd-detail-text strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+    }
+
+    .dnd-detail-text span {
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+    }
+
+    .dnd-art {
+      display: flex;
+      justify-content: center;
+    }
+
+    .dnd-art svg { width: 100%; max-width: 380px; }
+
+    .dnd-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .dnd-tag {
+      background: var(--warm-lt);
+      color: #7a5030;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+    }
+
+    /* ——— FOOTER ——— */
+    footer {
+      padding: 2.5rem 5rem;
+      background: var(--ink);
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .footer-name {
+      font-family: 'Lora', serif;
+      color: rgba(255,255,255,0.85);
+      font-size: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ——— RESPONSIVE ——— */
+    @media (max-width: 900px) {
+      section { padding: 4rem 2rem; }
+      .hero { grid-template-columns: 1fr; padding: 4rem 2rem; min-height: auto; gap: 2.5rem; }
+      .hero-art { display: none; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-image-placeholder { aspect-ratio: 4/3; }
+      .approach-grid { grid-template-columns: 1fr; }
+      .booking-steps { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .dnd-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .dnd-art { display: none; }
+      #contact { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ——— NAV ——— -->
+  <nav>
+    <a href="#" class="nav-name">Derick Baker</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#approach">My Approach</a></li>
+      <li><a href="#dnd">D&amp;D Group</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="scheduler.html" class="nav-cta">Book a session</a></li>
+    </ul>
+  </nav>
+
+  <!-- ——— HERO ——— -->
+  <header class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Student Counsellor · Online · Practicum</p>
+      <h1 class="hero-heading">A space to feel <em>heard</em>, and find your way forward.</h1>
+      <p class="hero-body">
+        I offer a warm, non-judgmental space where you can explore what's weighing on you — at whatever pace feels right. You don't have to have it all figured out to begin.
+      </p>
+      <a href="scheduler.html" class="btn btn-primary">Book a free intro call</a>
+      <a href="#about" class="btn btn-outline">Learn more</a>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 420 460" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Soft organic background blob -->
+        <ellipse cx="210" cy="230" rx="185" ry="200" fill="#EDF2EC" opacity="0.6"/>
+        <!-- Gentle leaf / nature forms -->
+        <path d="M150 340 Q110 260 180 180 Q240 120 300 180 Q360 240 310 320 Q270 380 210 380 Q170 380 150 340Z"
+              fill="#8FAF8A" opacity="0.18"/>
+        <path d="M170 310 Q140 250 200 190 Q255 140 300 200 Q340 250 295 310 Q260 355 215 355 Q185 355 170 310Z"
+              fill="#8FAF8A" opacity="0.25"/>
+        <!-- Two seated figures (abstract) -->
+        <!-- Figure 1 (counsellor, right) -->
+        <circle cx="265" cy="195" r="22" fill="#B8956A" opacity="0.75"/>
+        <path d="M245 215 Q250 265 265 285 Q280 265 285 215" fill="#B8956A" opacity="0.55"/>
+        <!-- Figure 2 (client, left) -->
+        <circle cx="155" cy="200" r="20" fill="#5C5550" opacity="0.5"/>
+        <path d="M137 220 Q143 268 155 286 Q167 268 173 220" fill="#5C5550" opacity="0.4"/>
+        <!-- Connecting warmth arc between them -->
+        <path d="M175 240 Q210 225 245 240" stroke="#B8956A" stroke-width="2" stroke-linecap="round" opacity="0.5" fill="none"/>
+        <!-- Small leaf accents -->
+        <path d="M100 300 Q90 270 115 258 Q128 272 120 298Z" fill="#8FAF8A" opacity="0.45"/>
+        <path d="M310 290 Q320 258 345 248 Q354 264 340 286Z" fill="#8FAF8A" opacity="0.35"/>
+        <path d="M200 380 Q195 355 215 345 Q223 358 215 378Z" fill="#8FAF8A" opacity="0.4"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ——— ABOUT ——— -->
+  <section id="about">
+    <div class="about-image-placeholder">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Your photo goes here<br><span style="font-size:0.78rem">Replace this placeholder with your headshot</span></span>
+    </div>
+    <div>
+      <p class="section-eyebrow">About me</p>
+      <h2 class="section-heading">I'm here because I believe everyone deserves a safe place to be themselves.</h2>
+
+      <blockquote class="about-quote">
+        "The curious paradox is that when I accept myself just as I am, then I can change." — Carl Rogers
+      </blockquote>
+
+      <p class="section-body">
+        I'm currently completing my practicum as a student counsellor. I work from a <strong>person-centred</strong> foundation — which means I follow your lead. You are the expert on your own life, and my role is to listen deeply, reflect honestly, and walk alongside you without judgment.
+      </p>
+
+      <p class="section-body" style="margin-bottom:0.75rem">
+        I weave in <strong>attachment theory</strong> to help us understand the patterns that shape how you relate to yourself and others, and draw on an <strong>integrative</strong> lens to tailor our work to what resonates with you.
+      </p>
+
+      <div class="approach-tags">
+        <span class="tag">Person-Centred</span>
+        <span class="tag">Attachment-Informed</span>
+        <span class="tag">Integrative</span>
+        <span class="tag">Non-Judgmental</span>
+        <span class="tag">Trauma-Aware</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— APPROACH ——— -->
+  <section id="approach">
+    <p class="section-eyebrow">How I work</p>
+    <h2 class="section-heading">What you can expect from our sessions</h2>
+    <p class="section-body">Every person is different, and so is every session. Here are the threads that run through all the work I do.</p>
+
+    <div class="approach-grid">
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Unconditional positive regard</h3>
+        <p>You will not be judged, rushed, or told what to feel. I meet you exactly where you are — with full acceptance and genuine care.</p>
+      </div>
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Exploring your patterns</h3>
+        <p>Together we can gently look at the relational patterns you carry — where they came from and whether they still serve you today.</p>
+      </div>
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>A safe, consistent space</h3>
+        <p>Confidentiality and consistency matter. Each session is yours — a predictable, private container where you can say what you actually mean.</p>
+      </div>
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Your pace, always</h3>
+        <p>There's no agenda to rush through. We go at the speed that feels right for you — and you are always free to steer the conversation.</p>
+      </div>
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Tailored to you</h3>
+        <p>My integrative approach means I draw from different frameworks based on what seems most helpful for you — not a one-size-fits-all script.</p>
+      </div>
+      <div class="approach-card">
+        <div class="approach-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        </div>
+        <h3>Growth, gently</h3>
+        <p>Insight alone isn't always enough. We work toward meaningful, sustainable change — one that grows from understanding, not pressure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— BOOKING ——— -->
+  <section id="book">
+    <p class="section-eyebrow">Getting started</p>
+    <h2 class="section-heading">It's easier than you might think to begin</h2>
+    <p class="section-body">You don't need to have the right words. Reaching out is the first — and hardest — step.</p>
+
+    <div class="booking-card">
+      <div class="booking-steps">
+        <div>
+          <p class="step-num">01</p>
+          <p class="step-label">Book a free call</p>
+          <p class="step-desc">45–60 minutes to see if we're a good fit — no commitment required.</p>
+        </div>
+        <div>
+          <p class="step-num">02</p>
+          <p class="step-label">We talk</p>
+          <p class="step-desc">Share a bit about what's bringing you in and ask me anything.</p>
+        </div>
+        <div>
+          <p class="step-num">03</p>
+          <p class="step-label">Start sessions</p>
+          <p class="step-desc">If it feels right, we schedule regular sessions and begin.</p>
+        </div>
+      </div>
+      <a href="scheduler.html" class="btn btn-primary">Open the scheduler →</a>
+      <p class="booking-note">Sessions are offered free of charge as part of my supervised practicum.</p>
+    </div>
+  </section>
+
+  <!-- ——— D&D GROUP ——— -->
+  <section id="dnd">
+    <div class="dnd-grid">
+      <div>
+        <p class="section-eyebrow">Group program</p>
+        <h2 class="section-heading">Therapeutic D&amp;D: grow through the game</h2>
+        <p class="section-body">
+          Dungeons &amp; Dragons isn't just a game — it's a surprisingly powerful space for building real-world skills. In this therapeutic group, we use collaborative storytelling and roleplay to explore identity, practice communication, and develop social and emotional skills in a low-pressure, imaginative setting.
+        </p>
+        <p class="section-body" style="margin-bottom:0">
+          No experience with D&amp;D is needed — just a willingness to show up, try things, and be part of a supportive group. I'll guide the adventure.
+        </p>
+
+        <div class="dnd-details">
+          <div class="dnd-detail-row">
+            <div class="dnd-detail-icon">
+              <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="dnd-detail-text">
+              <strong>Small group format</strong>
+              <span>Run online with a small group of participants for an intimate, safe experience.</span>
+            </div>
+          </div>
+          <div class="dnd-detail-row">
+            <div class="dnd-detail-icon">
+              <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="dnd-detail-text">
+              <strong>Weekly sessions</strong>
+              <span>Regular weekly meetups — timing to be confirmed based on group availability.</span>
+            </div>
+          </div>
+          <div class="dnd-detail-row">
+            <div class="dnd-detail-icon">
+              <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="dnd-detail-text">
+              <strong>Supervised &amp; free</strong>
+              <span>Offered as part of my supervised practicum at no cost to participants.</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:0.85rem; font-weight:500; color:var(--ink-mid); margin-bottom:0.6rem">Skills we work on together:</p>
+        <div class="dnd-skills">
+          <span class="dnd-tag">Communication</span>
+          <span class="dnd-tag">Self-expression</span>
+          <span class="dnd-tag">Empathy</span>
+          <span class="dnd-tag">Problem-solving</span>
+          <span class="dnd-tag">Confidence</span>
+          <span class="dnd-tag">Emotional regulation</span>
+          <span class="dnd-tag">Collaboration</span>
+        </div>
+
+        <div style="margin-top:2rem">
+          <a href="scheduler.html" class="btn btn-primary">Express interest →</a>
+          <a href="#contact" class="btn btn-outline">Ask me about it</a>
+        </div>
+      </div>
+
+      <div class="dnd-art">
+        <svg viewBox="0 0 380 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Background soft circle -->
+          <ellipse cx="190" cy="210" rx="170" ry="180" fill="#F7EFE6" opacity="0.7"/>
+          <!-- Table surface -->
+          <ellipse cx="190" cy="280" rx="130" ry="40" fill="#E8E0D4" opacity="0.8"/>
+          <!-- D20 die (large, centre) -->
+          <polygon points="190,100 240,175 190,200 140,175" fill="#B8956A" opacity="0.9"/>
+          <polygon points="190,100 240,175 270,130" fill="#D4AA85" opacity="0.75"/>
+          <polygon points="190,100 140,175 110,130" fill="#A07855" opacity="0.8"/>
+          <polygon points="140,175 190,200 160,240" fill="#8F6640" opacity="0.7"/>
+          <polygon points="240,175 190,200 220,240" fill="#C49A6A" opacity="0.7"/>
+          <polygon points="160,240 190,200 220,240" fill="#B8956A" opacity="0.6"/>
+          <!-- "20" on die face -->
+          <text x="190" y="168" text-anchor="middle" font-family="serif" font-size="22" font-weight="bold" fill="#FDFCFA" opacity="0.9">20</text>
+          <!-- Figures around the table (simplified) -->
+          <!-- Figure 1 (left) -->
+          <circle cx="90" cy="255" r="16" fill="#8FAF8A" opacity="0.7"/>
+          <path d="M76 270 Q80 295 90 308 Q100 295 104 270" fill="#8FAF8A" opacity="0.55"/>
+          <!-- Figure 2 (right) -->
+          <circle cx="290" cy="255" r="16" fill="#8FAF8A" opacity="0.7"/>
+          <path d="M276 270 Q280 295 290 308 Q300 295 304 270" fill="#8FAF8A" opacity="0.55"/>
+          <!-- Figure 3 (top left) -->
+          <circle cx="130" cy="220" r="14" fill="#B8956A" opacity="0.6"/>
+          <path d="M118 233 Q122 254 130 265 Q138 254 142 233" fill="#B8956A" opacity="0.45"/>
+          <!-- Figure 4 (top right) -->
+          <circle cx="250" cy="220" r="14" fill="#B8956A" opacity="0.6"/>
+          <path d="M238 233 Q242 254 250 265 Q258 254 262 233" fill="#B8956A" opacity="0.45"/>
+          <!-- Connecting arcs (camaraderie) -->
+          <path d="M100 270 Q145 255 180 268" stroke="#8FAF8A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+          <path d="M200 268 Q235 255 278 270" stroke="#8FAF8A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+          <!-- Small stars / sparkles -->
+          <circle cx="155" cy="155" r="3" fill="#B8956A" opacity="0.5"/>
+          <circle cx="228" cy="148" r="2" fill="#8FAF8A" opacity="0.6"/>
+          <circle cx="310" cy="200" r="3" fill="#B8956A" opacity="0.4"/>
+          <circle cx="70" cy="210" r="2.5" fill="#8FAF8A" opacity="0.5"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——— RESOURCES ——— -->
+  <section id="resources">
+    <p class="section-eyebrow">Resources</p>
+    <h2 class="section-heading">A few things that might help</h2>
+    <p class="section-body">These are starting points — not prescriptions. Take what resonates, leave what doesn't.</p>
+
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div>
+          <span class="resource-tag">Self-compassion</span>
+          <h3 style="margin-top:0.5rem">The basics of self-compassion</h3>
+          <p>Dr. Kristin Neff's work on treating yourself with the same kindness you'd offer a good friend — and why it matters.</p>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div>
+          <span class="resource-tag">Anxiety</span>
+          <h3 style="margin-top:0.5rem">Understanding the stress response</h3>
+          <p>A plain-language look at what happens in your body and mind when anxiety shows up — and how to work with it, not against it.</p>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div>
+          <span class="resource-tag">Relationships</span>
+          <h3 style="margin-top:0.5rem">Attachment styles: a gentle intro</h3>
+          <p>How early relationships shape the way we connect — and how understanding your pattern can open new possibilities.</p>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div>
+          <span class="resource-tag">Grounding</span>
+          <h3 style="margin-top:0.5rem">Simple grounding techniques</h3>
+          <p>Practical, evidence-informed ways to come back to the present moment when things feel overwhelming.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem; font-size:0.88rem; color:var(--ink-lt)">
+      ✦ &nbsp;More resources coming soon. Want me to write about a particular topic?
+      <a href="#contact" style="color:var(--sage); text-decoration:none">Let me know →</a>
+    </p>
+  </section>
+
+  <!-- ——— CONTACT ——— -->
+  <section id="contact">
+    <div>
+      <p class="section-eyebrow">Get in touch</p>
+      <h2 class="section-heading">Have a question? I'd love to hear from you.</h2>
+      <p class="section-body">
+        Whether you're wondering if counselling is right for you, or just want to know more about how I work — please reach out. No question is too small.
+      </p>
+
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <span>derick.baker101@gmail.com</span>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <span>Online · Video &amp; phone sessions available</span>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span>Response within 2 business days</span>
+      </div>
+
+      <p style="margin-top:2rem; font-size:0.85rem; color:var(--ink-lt); max-width:360px; line-height:1.6">
+        <em>If you are in crisis or need immediate support, please contact the <strong>Crisis Centre BC</strong> at 1-800-784-2433 (available 24/7).</em>
+      </p>
+    </div>
+
+    <div class="contact-form">
+      <h3 style="font-family:'Lora',serif; font-size:1.15rem; font-weight:400; color:var(--ink); margin-bottom:1.5rem">Send me a message</h3>
+      <div class="form-group">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="How should I address you?" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="your@email.com" />
+      </div>
+      <div class="form-group">
+        <label for="reason">What brings you here?</label>
+        <select id="reason">
+          <option value="">Select one…</option>
+          <option>I'm curious about counselling</option>
+          <option>I'd like to book a session</option>
+          <option>I'm interested in the D&D group</option>
+          <option>I have a question about your approach</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Your message</label>
+        <textarea id="message" placeholder="Share whatever feels right — there's no wrong thing to say."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">Send message</button>
+      <p id="form-confirm" style="display:none; font-size:0.85rem; color:#4a7045; margin-top:1rem; text-align:center">
+        ✓ Thank you — I'll be in touch soon.
+      </p>
+      <p style="font-size:0.78rem; color:var(--ink-lt); margin-top:1rem; text-align:center">
+        Your message is confidential. This is not a crisis line.
+      </p>
+    </div>
+  </section>
+
+  <!-- ——— FOOTER ——— -->
+  <footer>
+    <span class="footer-name">Derick Baker · Student Counsellor</span>
+    <span>Supervised practicum · Online sessions</span>
+    <span class="footer-note">This site is for informational purposes only and does not constitute clinical advice.</span>
+  </footer>
+
+  <script>
+    function handleSubmit() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      if (!name || !email) {
+        alert('Please fill in your name and email.');
+        return;
+      }
+      document.getElementById('form-confirm').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
