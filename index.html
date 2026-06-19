@@ -994,14 +994,46 @@
   </footer>
 
   <script>
-    function handleSubmit() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
+    async function handleSubmit() {
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const reason  = document.getElementById('reason').value;
+      const message = document.getElementById('message').value.trim();
+
       if (!name || !email) {
-        alert('Please fill in your name and email.');
+        alert('Please fill in your name and email address.');
         return;
       }
-      document.getElementById('form-confirm').style.display = 'block';
+
+      const btn = document.querySelector('.form-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://formspree.io/f/xkoadqdj', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ name, email, reason, message })
+        });
+
+        if (res.ok) {
+          btn.style.display = 'none';
+          document.getElementById('form-confirm').style.display = 'block';
+          document.getElementById('name').value    = '';
+          document.getElementById('email').value   = '';
+          document.getElementById('reason').value  = '';
+          document.getElementById('message').value = '';
+        } else {
+          const data = await res.json();
+          alert(data?.errors?.[0]?.message || 'Something went wrong. Please try again or email derick.baker101@gmail.com directly.');
+          btn.textContent = 'Send message';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        alert('Could not send your message. Please email derick.baker101@gmail.com directly.');
+        btn.textContent = 'Send message';
+        btn.disabled = false;
+      }
     }
   </script>
 </body>
