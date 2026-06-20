@@ -761,91 +761,8 @@
   </div>
 </div>
 
-<!-- ADMIN TOGGLE -->
-<button class="admin-toggle" onclick="openAdmin()">🗓 My schedule</button>
-
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="admin-panel">
-  <div class="admin-inner">
-    <div class="admin-head">
-      <h2>My schedule</h2>
-      <button class="close-btn" onclick="closeAdmin()">✕</button>
-    </div>
-
-    <!-- Availability settings -->
-    <p style="font-size:0.85rem; font-weight:500; color:var(--ink-mid); margin-bottom:0.5rem">Available days</p>
-    <div class="avail-grid" id="avail-days">
-      <div class="day-toggle" data-day="0" onclick="toggleDay(this)">Sun</div>
-      <div class="day-toggle on" data-day="1" onclick="toggleDay(this)">Mon</div>
-      <div class="day-toggle on" data-day="2" onclick="toggleDay(this)">Tue</div>
-      <div class="day-toggle on" data-day="3" onclick="toggleDay(this)">Wed</div>
-      <div class="day-toggle on" data-day="4" onclick="toggleDay(this)">Thu</div>
-      <div class="day-toggle" data-day="5" onclick="toggleDay(this)">Fri</div>
-      <div class="day-toggle" data-day="6" onclick="toggleDay(this)">Sat</div>
-    </div>
-
-    <div class="time-range">
-      <label style="margin:0; min-width:60px; font-size:0.85rem; color:var(--ink-mid);">Hours:</label>
-      <input type="time" id="avail-start" value="09:00" />
-      <span>to</span>
-      <input type="time" id="avail-end" value="17:00" />
-      <button class="btn btn-primary" style="padding:0.4rem 1rem; font-size:0.82rem" onclick="saveAvail()">Save</button>
-    </div>
-
-    <hr style="border:none; border-top:1px solid var(--stone); margin:1.25rem 0" />
-
-    <!-- Upcoming bookings -->
-    <p style="font-size:0.85rem; font-weight:500; color:var(--ink-mid); margin-bottom:1rem">Upcoming bookings</p>
-    <div id="bookings-table-wrap">
-      <div class="empty-state">
-        <span style="font-size:2rem">📭</span>
-        <p>No bookings yet. They'll appear here once clients schedule.</p>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <script>
-  /* ——— STATE ——— */
-  const state = {
-    sessionType: 'intro',
-    sessionLabel: 'Intro / discovery call (45–60 min)',
-    selectedDate: null,
-    selectedSlot: null,
-    currentYear: new Date().getFullYear(),
-    currentMonth: new Date().getMonth(),
-    bookings: JSON.parse(localStorage.getItem('counsellor_bookings') || '[]'),
-    availDays: JSON.parse(localStorage.getItem('counsellor_avail_days') || '[1,2,3,4]'),
-    availStart: localStorage.getItem('counsellor_avail_start') || '09:00',
-    availEnd: localStorage.getItem('counsellor_avail_end') || '17:00',
-  };
-
-  /* ——— INIT ——— */
-  renderCalendar();
-  syncAvailUI();
-
-  function syncAvailUI() {
-    document.querySelectorAll('.day-toggle').forEach(el => {
-      const d = parseInt(el.dataset.day);
-      el.classList.toggle('on', state.availDays.includes(d));
-    });
-    document.getElementById('avail-start').value = state.availStart;
-    document.getElementById('avail-end').value = state.availEnd;
-  }
-
-  /* ——— SESSION TYPE ——— */
-  function selectType(el, type) {
-    document.querySelectorAll('.session-type').forEach(e => e.classList.remove('active'));
-    el.classList.add('active');
-    state.sessionType = type;
-    state.sessionLabel = el.querySelector('.session-type-name').textContent +
-      ' (' + el.querySelector('.session-type-meta').textContent.split('·')[0].trim() + ')';
-    if (type === 'dnd') {
-      // D&D branch handled in selectType
-    }
-  }
-
   const GCAL = {
     intro:      'https://calendar.app.google/eSDJpTyaKvg39T5M8',
     individual: 'https://calendar.app.google/Nyqo8tYapEZZQWZd6',
@@ -911,7 +828,7 @@
 
   function goToCalendar() {
     if (!document.getElementById('consent').checked) {
-      alert('Please confirm your consent before continuing.');
+      alert('Please tick the consent box before continuing.');
       return;
     }
     window.open(GCAL[currentType], '_blank');
@@ -964,7 +881,7 @@
     }
   }
 
-  // Init
+  // Init — load intro panel on page load
   selectType(document.querySelector('.session-type.active'), 'intro');
 </script>
 
