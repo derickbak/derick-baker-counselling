@@ -686,160 +686,76 @@
   <!-- BOOKING PANEL -->
   <div class="booking-panel">
 
-    <!-- STEPS BAR -->
-    <div class="steps-bar" id="steps-bar">
-      <div class="step-indicator active" id="step1-ind">
-        <div class="step-dot">1</div>
-        <span>Pick a date &amp; time</span>
+    <!-- INTRO: session selected, redirect prompt -->
+    <div class="panel-inner" id="booking-intro">
+      <h3 class="panel-heading" id="booking-heading">Book your intro call</h3>
+      <p class="panel-sub" id="booking-sub">You'll be taken to Google Calendar to pick a date and time that works for you. Your booking goes straight into Derick's calendar and you'll get an automatic confirmation email.</p>
+
+      <!-- What to expect -->
+      <div id="booking-what" style="margin-bottom:1.75rem">
+        <p style="font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-lt); margin-bottom:0.75rem">What to expect</p>
+        <div id="booking-details" style="display:flex; flex-direction:column; gap:0.6rem"></div>
       </div>
-      <div class="step-connector"></div>
-      <div class="step-indicator" id="step2-ind">
-        <div class="step-dot">2</div>
-        <span>Your details</span>
+
+      <!-- Consent -->
+      <div class="checkbox-row" style="margin-bottom:1.5rem">
+        <input type="checkbox" id="consent" />
+        <label class="checkbox-label" for="consent">
+          I understand this is a supervised student practicum and sessions are offered free of charge. I consent to proceeding with this understanding.
+        </label>
       </div>
-      <div class="step-connector"></div>
-      <div class="step-indicator" id="step3-ind">
-        <div class="step-dot">3</div>
-        <span>Confirm</span>
+
+      <div class="btn-row" style="justify-content:flex-start">
+        <button class="btn btn-primary" id="gcal-btn" onclick="goToCalendar()">Open booking calendar →</button>
       </div>
+
+      <p style="font-size:0.78rem; color:var(--ink-lt); margin-top:1rem">
+        You'll be redirected to Google Calendar. All sessions are confidential.
+      </p>
     </div>
 
-    <!-- STEP 1: CALENDAR -->
-    <div class="panel-inner" id="step1">
-      <h3 class="panel-heading">Choose a date</h3>
-      <p class="panel-sub" id="step1-sub">Available dates are shown below based on your counsellor's current schedule.</p>
-
-      <div class="calendar-nav">
-        <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
-        <span class="cal-month" id="cal-month-label"></span>
-        <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
-      </div>
-
-      <div class="cal-grid">
-        <div class="cal-day-header">Sun</div>
-        <div class="cal-day-header">Mon</div>
-        <div class="cal-day-header">Tue</div>
-        <div class="cal-day-header">Wed</div>
-        <div class="cal-day-header">Thu</div>
-        <div class="cal-day-header">Fri</div>
-        <div class="cal-day-header">Sat</div>
-        <div id="cal-days"></div>
-      </div>
-
-      <div class="time-section" id="time-section" style="display:none">
-        <p class="time-section-label" id="time-section-label">Available times</p>
-        <div class="slots-grid" id="morning-slots"></div>
-        <div id="afternoon-label" style="display:none" class="time-section-label">Afternoon</div>
-        <div class="slots-grid" id="afternoon-slots"></div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" id="step1-next" onclick="goStep(2)" disabled>Next →</button>
-      </div>
-    </div>
-
-    <!-- STEP 2: DETAILS -->
-    <div class="panel-inner" id="step2" style="display:none">
-      <h3 class="panel-heading">Your details</h3>
-      <p class="panel-sub">This information helps me prepare and is kept confidential.</p>
+    <!-- D&D expression of interest -->
+    <div class="panel-inner" id="dnd-panel" style="display:none">
+      <h3 class="panel-heading">Interested in the D&amp;D group?</h3>
+      <p class="panel-sub">The Therapeutic D&amp;D group runs on a fixed schedule. Fill in the form below and Derick will be in touch with details.</p>
 
       <div class="form-grid">
         <div class="form-group">
-          <label for="fname">First name *</label>
-          <input type="text" id="fname" placeholder="Your first name" />
+          <label for="dnd-fname">First name *</label>
+          <input type="text" id="dnd-fname" placeholder="Your first name" />
         </div>
         <div class="form-group">
-          <label for="lname">Last name *</label>
-          <input type="text" id="lname" placeholder="Your last name" />
-        </div>
-        <div class="form-group">
-          <label for="cemail">Email address *</label>
-          <input type="email" id="cemail" placeholder="you@example.com" />
-        </div>
-        <div class="form-group">
-          <label for="cphone">Phone number (optional)</label>
-          <input type="tel" id="cphone" placeholder="250-555-0100" />
+          <label for="dnd-lname">Last name *</label>
+          <input type="text" id="dnd-lname" placeholder="Your last name" />
         </div>
         <div class="form-group full">
-          <label for="cformat">Preferred format *</label>
-          <select id="cformat">
-            <option value="">Select one…</option>
-            <option>Online — video call</option>
-            <option>Online — phone call</option>
-          </select>
+          <label for="dnd-email">Email address *</label>
+          <input type="email" id="dnd-email" placeholder="you@example.com" />
         </div>
         <div class="form-group full">
-          <label for="cnotes">Anything you'd like me to know before we meet? (optional)</label>
-          <textarea id="cnotes" placeholder="There's no wrong thing to say. Share whatever feels helpful. If you're interested in the D&D group, feel free to share what draws you to it."></textarea>
+          <label for="dnd-notes">What draws you to this group? (optional)</label>
+          <textarea id="dnd-notes" placeholder="There's no wrong thing to say — share whatever feels right."></textarea>
         </div>
         <div class="form-group full">
           <div class="checkbox-row">
-            <input type="checkbox" id="consent" />
-            <label class="checkbox-label" for="consent">
-              I understand this is a student practicum and sessions are supervised. I consent to booking a session or expressing interest in a group program with this understanding.
+            <input type="checkbox" id="dnd-consent" />
+            <label class="checkbox-label" for="dnd-consent">
+              I understand this is a supervised student practicum offered free of charge, and consent to being contacted about the group.
             </label>
           </div>
         </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goStep(1)">← Back</button>
-        <button class="btn btn-primary" onclick="goStep(3)">Review booking →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3: CONFIRM -->
-    <div class="panel-inner" id="step3" style="display:none">
-      <h3 class="panel-heading">Confirm your booking</h3>
-      <p class="panel-sub">Please review your details before confirming.</p>
-
-      <div class="confirm-card">
-        <div class="confirm-row">
-          <span class="confirm-label">Session type</span>
-          <span class="confirm-val" id="c-type">—</span>
-        </div>
-        <div class="confirm-row">
-          <span class="confirm-label">Date</span>
-          <span class="confirm-val" id="c-date">—</span>
-        </div>
-        <div class="confirm-row">
-          <span class="confirm-label">Time</span>
-          <span class="confirm-val" id="c-time">—</span>
-        </div>
-        <div class="confirm-row">
-          <span class="confirm-label">Format</span>
-          <span class="confirm-val" id="c-format">—</span>
-        </div>
-        <div class="confirm-row">
-          <span class="confirm-label">Name</span>
-          <span class="confirm-val" id="c-name">—</span>
-        </div>
-        <div class="confirm-row" style="margin-bottom:0">
-          <span class="confirm-label">Email</span>
-          <span class="confirm-val" id="c-email">—</span>
-        </div>
+        <button class="btn btn-primary" onclick="submitDnD()">Send my interest →</button>
       </div>
 
-      <p style="font-size:0.85rem; color:var(--ink-mid); line-height:1.6; margin-bottom:0.5rem">
-        You'll receive a confirmation email shortly after booking. If you need to cancel or reschedule, please email at least 24 hours before your appointment.
+      <p id="dnd-confirm" style="display:none; font-size:0.85rem; color:#4a7045; margin-top:1rem; text-align:center">
+        ✓ Got it! Derick will be in touch soon about the group.
       </p>
-
-      <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goStep(2)">← Back</button>
-        <button class="btn btn-primary" onclick="confirmBooking()">Confirm booking ✓</button>
-      </div>
-    </div>
-
-    <!-- SUCCESS -->
-    <div class="success-screen" id="success" style="display:none">
-      <div class="success-icon">🌿</div>
-      <h2>You're booked!</h2>
-      <p>A confirmation has been noted. I look forward to meeting you.</p>
-      <p id="success-details" style="font-weight:500; margin-top:0.5rem;"></p>
-      <div style="margin-top:2rem">
-        <a href="index.html" class="btn btn-ghost" style="text-decoration:none">← Back to website</a>
-        <button class="btn btn-primary" style="margin-left:0.75rem" onclick="bookAnother()">Book another</button>
-      </div>
+      <p style="font-size:0.78rem; color:var(--ink-lt); margin-top:1rem; text-align:center">
+        Your information is confidential. This is not a crisis line.
+      </p>
     </div>
 
   </div>
@@ -926,295 +842,130 @@
     state.sessionLabel = el.querySelector('.session-type-name').textContent +
       ' (' + el.querySelector('.session-type-meta').textContent.split('·')[0].trim() + ')';
     if (type === 'dnd') {
-      document.getElementById('step1-sub').textContent =
-        'Select a preferred date and time to express your interest in the Therapeutic D&D group. Derick will follow up to confirm group schedule details.';
-    } else if (type === 'intro') {
-      document.getElementById('step1-sub').textContent =
-        'Showing availability for a 45–60 minute intro/discovery call.';
-    } else {
-      document.getElementById('step1-sub').textContent =
-        'Showing availability for a 60-minute individual counselling session.';
-    }
-    state.selectedSlot = null;
-    state.selectedDate = null;
-    document.getElementById('step1-next').disabled = true;
-    document.getElementById('time-section').style.display = 'none';
-    renderCalendar();
-  }
-
-  /* ——— CALENDAR ——— */
-  const MONTHS = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-
-  function renderCalendar() {
-    const { currentYear: y, currentMonth: m } = state;
-    document.getElementById('cal-month-label').textContent = `${MONTHS[m]} ${y}`;
-
-    const firstDay = new Date(y, m, 1).getDay();
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    const today = new Date();
-
-    let html = '';
-    for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
-
-    for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(y, m, d);
-      const dayOfWeek = date.getDay();
-      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-
-      let classes = 'cal-day';
-      if (date < new Date(today.getFullYear(), today.getMonth(), today.getDate()))
-        classes += ' past';
-      else if (!state.availDays.includes(dayOfWeek))
-        classes += ' unavailable';
-      else
-        classes += ' available';
-
-      if (today.getDate() === d && today.getMonth() === m && today.getFullYear() === y)
-        classes += ' today';
-      if (state.selectedDate === dateStr) classes += ' selected';
-
-      html += `<div class="${classes}" onclick="selectDate('${dateStr}', this)">${d}</div>`;
-    }
-
-    document.getElementById('cal-days').innerHTML = html;
-  }
-
-  function selectDate(dateStr, el) {
-    if (el.classList.contains('past') || el.classList.contains('empty') || el.classList.contains('unavailable')) return;
-    state.selectedDate = dateStr;
-    state.selectedSlot = null;
-    document.getElementById('step1-next').disabled = true;
-
-    document.querySelectorAll('.cal-day').forEach(e => e.classList.remove('selected'));
-    el.classList.add('selected');
-
-    renderTimeSlots(dateStr);
-  }
-
-  function renderTimeSlots(dateStr) {
-    const [y, mo, d] = dateStr.split('-').map(Number);
-    const [sh, sm] = state.availStart.split(':').map(Number);
-    const [eh, em] = state.availEnd.split(':').map(Number);
-
-    const dur = state.sessionType === 'intro' ? 60 : 60;
-    const slots = [];
-    let cur = sh * 60 + sm;
-    const end = eh * 60 + em;
-    while (cur + dur <= end) {
-      const hh = Math.floor(cur / 60);
-      const mm = cur % 60;
-      const label = `${hh > 12 ? hh - 12 : hh === 0 ? 12 : hh}:${String(mm).padStart(2,'0')} ${hh >= 12 ? 'PM' : 'AM'}`;
-      slots.push({ label, value: `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}` });
-      cur += dur;
-    }
-
-    // Check booked slots
-    const bookedSlots = state.bookings
-      .filter(b => b.date === dateStr)
-      .map(b => b.slot);
-
-    const morningSlots = slots.filter(s => parseInt(s.value.split(':')[0]) < 12);
-    const afternoonSlots = slots.filter(s => parseInt(s.value.split(':')[0]) >= 12);
-
-    const renderSlots = (arr, containerId) => {
-      const container = document.getElementById(containerId);
-      if (!arr.length) { container.innerHTML = ''; return; }
-      container.innerHTML = arr.map(s => {
-        const booked = bookedSlots.includes(s.value);
-        return `<div class="slot${booked ? ' booked' : ''}${state.selectedSlot === s.value ? ' selected' : ''}"
-          onclick="${booked ? '' : `pickSlot('${s.value}', '${s.label}', this)`}">${s.label}</div>`;
-      }).join('');
-    };
-
-    renderSlots(morningSlots, 'morning-slots');
-
-    const afLabel = document.getElementById('afternoon-label');
-    if (afternoonSlots.length) {
-      afLabel.style.display = 'block';
-      afLabel.textContent = 'Afternoon';
-    } else {
-      afLabel.style.display = 'none';
-    }
-    renderSlots(afternoonSlots, 'afternoon-slots');
-
-    const label = document.getElementById('time-section-label');
-    label.textContent = morningSlots.length ? 'Morning' : 'Available times';
-
-    const [fy, fm, fd] = dateStr.split('-').map(Number);
-    const dateObj = new Date(fy, fm - 1, fd);
-    const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dateObj.getDay()];
-    const monthName = MONTHS[fm - 1];
-    document.getElementById('time-section').style.display = 'block';
-    document.getElementById('time-section').querySelector('.time-section-label').textContent =
-      morningSlots.length && afternoonSlots.length ? 'Morning' : 'Available times';
-
-    if (slots.length === 0) {
-      document.getElementById('morning-slots').innerHTML = '<p style="color:var(--ink-lt); font-size:0.85rem; grid-column:1/-1">No slots available for this day.</p>';
+      // D&D branch handled in selectType
     }
   }
 
-  function pickSlot(value, label, el) {
-    state.selectedSlot = value;
-    state.selectedSlotLabel = label;
-    document.querySelectorAll('.slot').forEach(e => e.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('step1-next').disabled = false;
-  }
+  const GCAL = {
+    intro:      'https://calendar.app.google/eSDJpTyaKvg39T5M8',
+    individual: 'https://calendar.app.google/Nyqo8tYapEZZQWZd6',
+  };
 
-  function prevMonth() {
-    state.currentMonth--;
-    if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
-    renderCalendar();
-  }
+  const SESSION_INFO = {
+    intro: {
+      heading: 'Book your intro / discovery call',
+      sub: "You'll be taken to Google Calendar to pick a date and time. Your booking goes straight into Derick's calendar and you'll get an automatic confirmation email.",
+      details: [
+        { icon: 'clock',  text: '45–60 minutes' },
+        { icon: 'video',  text: 'Online — video or phone call' },
+        { icon: 'heart',  text: "A relaxed chat to see if we're a good fit — no commitment" },
+        { icon: 'shield', text: 'Free, as part of a supervised practicum' },
+      ]
+    },
+    individual: {
+      heading: 'Book an individual counselling session',
+      sub: "You'll be taken to Google Calendar to pick a date and time. Your booking goes straight into Derick's calendar and you'll get an automatic confirmation email.",
+      details: [
+        { icon: 'clock',  text: '60 minutes' },
+        { icon: 'video',  text: 'Online — video or phone call' },
+        { icon: 'heart',  text: 'Person-centred, attachment-informed, integrative approach' },
+        { icon: 'shield', text: 'Free, as part of a supervised practicum' },
+      ]
+    },
+  };
 
-  function nextMonth() {
-    state.currentMonth++;
-    if (state.currentMonth > 11) { state.currentMonth = 0; state.currentYear++; }
-    renderCalendar();
-  }
+  const ICONS = {
+    clock:  '<svg style="width:16px;height:16px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    video:  '<svg style="width:16px;height:16px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="15" height="10" rx="2"/><path d="M17 9l5-2v10l-5-2"/></svg>',
+    heart:  '<svg style="width:16px;height:16px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+    shield: '<svg style="width:16px;height:16px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  };
 
-  /* ——— STEPS ——— */
-  function goStep(n) {
-    if (n === 2) {
-      if (!state.selectedDate || !state.selectedSlot) return;
-    }
-    if (n === 3) {
-      const fname = document.getElementById('fname').value.trim();
-      const lname = document.getElementById('lname').value.trim();
-      const email = document.getElementById('cemail').value.trim();
-      const format = document.getElementById('cformat').value;
-      const consent = document.getElementById('consent').checked;
-      if (!fname || !lname || !email || !format || !consent) {
-        alert('Please fill in all required fields and confirm your consent.');
-        return;
-      }
-      // Fill confirm card
-      const [fy, fm, fd] = state.selectedDate.split('-').map(Number);
-      const dateObj = new Date(fy, fm - 1, fd);
-      const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dateObj.getDay()];
-      document.getElementById('c-type').textContent = state.sessionLabel;
-      document.getElementById('c-date').textContent = `${dayName}, ${MONTHS[fm-1]} ${fd}, ${fy}`;
-      document.getElementById('c-time').textContent = state.selectedSlotLabel;
-      document.getElementById('c-format').textContent = format;
-      document.getElementById('c-name').textContent = `${fname} ${lname}`;
-      document.getElementById('c-email').textContent = email;
-    }
+  let currentType = 'intro';
 
-    ['step1','step2','step3','success'].forEach(id => document.getElementById(id).style.display = 'none');
-    document.getElementById(`step${n}`).style.display = 'block';
+  function selectType(el, type) {
+    document.querySelectorAll('.session-type').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    currentType = type;
 
-    document.querySelectorAll('[id^="step"][id$="-ind"]').forEach((el, i) => {
-      el.classList.remove('active','done');
-      if (i + 1 === n) el.classList.add('active');
-      else if (i + 1 < n) el.classList.add('done');
-    });
-  }
-
-  function confirmBooking() {
-    const fname = document.getElementById('fname').value.trim();
-    const lname = document.getElementById('lname').value.trim();
-    const email = document.getElementById('cemail').value.trim();
-    const phone = document.getElementById('cphone').value.trim();
-    const format = document.getElementById('cformat').value;
-    const notes = document.getElementById('cnotes').value.trim();
-
-    const booking = {
-      id: Date.now(),
-      type: state.sessionLabel,
-      date: state.selectedDate,
-      slot: state.selectedSlot,
-      slotLabel: state.selectedSlotLabel,
-      name: `${fname} ${lname}`,
-      email,
-      phone,
-      format,
-      notes,
-      bookedAt: new Date().toISOString(),
-    };
-
-    state.bookings.push(booking);
-    localStorage.setItem('counsellor_bookings', JSON.stringify(state.bookings));
-
-    // Show success
-    ['step1','step2','step3'].forEach(id => document.getElementById(id).style.display = 'none');
-    document.getElementById('success').style.display = 'block';
-
-    const [fy, fm, fd] = state.selectedDate.split('-').map(Number);
-    document.getElementById('success-details').textContent =
-      `${MONTHS[fm-1]} ${fd}, ${fy} at ${state.selectedSlotLabel}`;
-  }
-
-  function bookAnother() {
-    state.selectedDate = null;
-    state.selectedSlot = null;
-    document.getElementById('time-section').style.display = 'none';
-    document.getElementById('step1-next').disabled = true;
-    renderCalendar();
-    goStep(1);
-  }
-
-  /* ——— ADMIN ——— */
-  function openAdmin() {
-    renderBookingsTable();
-    document.getElementById('admin-panel').classList.add('open');
-  }
-
-  function closeAdmin() {
-    document.getElementById('admin-panel').classList.remove('open');
-  }
-
-  function renderBookingsTable() {
-    const wrap = document.getElementById('bookings-table-wrap');
-    const upcoming = state.bookings.filter(b => b.date >= new Date().toISOString().split('T')[0])
-      .sort((a, b) => a.date.localeCompare(b.date));
-
-    if (!upcoming.length) {
-      wrap.innerHTML = '<div class="empty-state"><span style="font-size:2rem">📭</span><p>No upcoming bookings yet.</p></div>';
+    if (type === 'dnd') {
+      document.getElementById('booking-intro').style.display = 'none';
+      document.getElementById('dnd-panel').style.display = 'block';
       return;
     }
 
-    wrap.innerHTML = `<table>
-      <thead><tr>
-        <th>Date &amp; time</th><th>Client</th><th>Type</th><th>Format</th><th>Notes</th>
-      </tr></thead>
-      <tbody>
-        ${upcoming.map(b => {
-          const [fy, fm, fd] = b.date.split('-').map(Number);
-          return `<tr>
-            <td><strong>${MONTHS[fm-1]} ${fd}</strong><br><span style="color:var(--ink-lt); font-size:0.82rem">${b.slotLabel}</span></td>
-            <td>${b.name}<br><a href="mailto:${b.email}" style="font-size:0.8rem; color:var(--sage)">${b.email}</a></td>
-            <td><span class="badge badge-green">${b.type.split('(')[0].trim()}</span></td>
-            <td><span class="badge badge-warm">${b.format}</span></td>
-            <td style="font-size:0.82rem; color:var(--ink-lt); max-width:140px">${b.notes || '—'}</td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table>`;
+    document.getElementById('dnd-panel').style.display = 'none';
+    document.getElementById('booking-intro').style.display = 'block';
+
+    const info = SESSION_INFO[type];
+    document.getElementById('booking-heading').textContent = info.heading;
+    document.getElementById('booking-sub').textContent = info.sub;
+    document.getElementById('booking-details').innerHTML = info.details.map(d =>
+      `<div style="display:flex;gap:0.65rem;align-items:flex-start;font-size:0.88rem;color:var(--ink-mid)">
+        ${ICONS[d.icon]}<span>${d.text}</span>
+      </div>`
+    ).join('');
+
+    document.getElementById('consent').checked = false;
   }
 
-  function toggleDay(el) {
-    const d = parseInt(el.dataset.day);
-    const idx = state.availDays.indexOf(d);
-    if (idx === -1) state.availDays.push(d);
-    else state.availDays.splice(idx, 1);
-    el.classList.toggle('on');
+  function goToCalendar() {
+    if (!document.getElementById('consent').checked) {
+      alert('Please confirm your consent before continuing.');
+      return;
+    }
+    window.open(GCAL[currentType], '_blank');
   }
 
-  function saveAvail() {
-    state.availStart = document.getElementById('avail-start').value;
-    state.availEnd = document.getElementById('avail-end').value;
-    localStorage.setItem('counsellor_avail_days', JSON.stringify(state.availDays));
-    localStorage.setItem('counsellor_avail_start', state.availStart);
-    localStorage.setItem('counsellor_avail_end', state.availEnd);
-    renderCalendar();
-    closeAdmin();
+  async function submitDnD() {
+    const fname   = document.getElementById('dnd-fname').value.trim();
+    const lname   = document.getElementById('dnd-lname').value.trim();
+    const email   = document.getElementById('dnd-email').value.trim();
+    const notes   = document.getElementById('dnd-notes').value.trim();
+    const consent = document.getElementById('dnd-consent').checked;
+
+    if (!fname || !lname || !email) {
+      alert('Please fill in your name and email address.');
+      return;
+    }
+    if (!consent) {
+      alert('Please confirm your consent before sending.');
+      return;
+    }
+
+    const btn = document.querySelector('#dnd-panel .btn-primary');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/xkoadqdj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: `${fname} ${lname}`,
+          email,
+          reason: 'Therapeutic D&D group — expression of interest',
+          message: notes || '(no additional message)'
+        })
+      });
+
+      if (res.ok) {
+        btn.style.display = 'none';
+        document.getElementById('dnd-confirm').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please email derick.baker101@gmail.com directly.');
+        btn.textContent = 'Send my interest →';
+        btn.disabled = false;
+      }
+    } catch {
+      alert('Could not send. Please email derick.baker101@gmail.com directly.');
+      btn.textContent = 'Send my interest →';
+      btn.disabled = false;
+    }
   }
 
-  /* Close admin on backdrop click */
-  document.getElementById('admin-panel').addEventListener('click', function(e) {
-    if (e.target === this) closeAdmin();
-  });
+  // Init
+  selectType(document.querySelector('.session-type.active'), 'intro');
 </script>
 
 </body>
